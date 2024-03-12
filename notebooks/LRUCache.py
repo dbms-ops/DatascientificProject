@@ -1,5 +1,7 @@
+import functools
 import time
 from collections import OrderedDict
+from functools import lru_cache
 
 
 class LRUCacheDict(object):
@@ -61,6 +63,23 @@ class LRUCacheDict(object):
             for k in self._access_records:
                 self.__delete__(k)
                 break
+def cache_it(max_size=60, expiration=60):
+    CACHE = LRUCacheDict(max_size=max_size, expiration=expiration)
+
+    def wrapper(func):
+        @functools.wraps(func)
+        def inner(*args, **kwargs):
+            key = repr(*args, **kwargs)
+            try:
+                result = CACHE[key]
+            except KeyError:
+                result = func(*args, **kwargs)
+                CACHE[key] = result
+            return result
+        return inner
+
+
+
 
 
 if __name__ == '__main__':
