@@ -64,7 +64,7 @@ class LRUCacheDict(object):
 
 
 if __name__ == '__main__':
-    cache = LRUCacheDict(max_size=2, expiration=20)
+    cache = LRUCacheDict(max_size=2, expiration=5)
     cache['a'] = 'bar'
     cache['b'] = 'ss'
     cache['c'] = 'ss'
@@ -75,4 +75,6 @@ if __name__ == '__main__':
     print('c' in cache)
     print('d' in cache)
 
-    print(cache)
+    time.sleep(6)
+    print('c' in cache)
+    print('d' in cache)
