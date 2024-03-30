@@ -4,5 +4,8 @@
         "PYTHONPATH",
         "repslist",
         "tikv"
+    ],
+    "flake8.ignorePatterns": [
+        "E303"
     ]
 }
