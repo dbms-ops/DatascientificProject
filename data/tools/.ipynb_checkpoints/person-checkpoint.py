@@ -39,42 +39,6 @@ class Manager(Person):
         return getattr(self.person, attr)
 
 
-class Department:
-    def __init__(self, *args) -> None:
-        self.members = list(*args)
-
-    def add_member(self, person: Person):
-        self.members.append(person)
-
-    def give_raises(self, percent):
-        for person in self.members:
-            person.give_raise(percent)
-
-    def show_all(self):
-        for person in self.members:
-            print(person)
-
-
-# 实现一个作为控制层的 manager
-class Manager1:
-    """通过 manager 实现一个控制类,
-    """
-    def __init__(self, name, pay) -> None:
-
-        self.person = Person(name, "mgr", pay)
-
-    def give_raise(self, percent, bonus):
-        self.person.give_raise(percent + bonus)
-
-    def __getattr__(self, attr):
-
-        return getattr(self.person, attr)
-
-    def __str__(self):
-
-        return str(self.person)
-
-
 if __name__ == "__main__":
     # self-test code
     bob = Person("Bob Smith")
