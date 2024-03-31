@@ -5,7 +5,9 @@
         "repslist",
         "tikv"
     ],
-    "flake8.ignorePatterns": [
-        "E303"
-    ]
+    "editor.defaultFormatter": "ms-python.autopep8",
+    "flake8.severity": {
+        "E": "Warning"
+    },
+    "editor.formatOnType": true
 }

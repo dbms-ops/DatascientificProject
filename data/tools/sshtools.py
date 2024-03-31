@@ -14,7 +14,7 @@ class DbmsSSH:
         self.client = paramiko.SSHClient()
         self.client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
-    def do_comand(self, command):
+    def do_command(self, command):
         """
         Connect to a remote host and execute a command.
 
@@ -25,15 +25,32 @@ class DbmsSSH:
             A tuple containing stdin, stdout, and stderr of the executed command.
         """
 
-        connect = self.client.connect(hostname=self.host, username=self.username, timeout=5, key_filename=self.key_filename)
-        return connect.exec_command(command, self.timeout)
+        self.client.connect(
+            hostname=self.host,
+            username=self.username,
+            timeout=5,
+            key_filename=self.key_filename,
+        )
+        return self.client.exec_command(command, self.timeout)
+
+    def __str__(self) -> str:
+        format_str = """
+        {'-'*50}
+        {stdout}
+        {stderr}
+        {'-'*50}
+        """
+        _, stdout, stderr = self.do_command()
+        return format_str.format(stdout=stdout.read(), stderr=stderr.read())
 
     def __del__(self):
         self.client.close()
 
 
-if __name__ == '__main__':
-    ssh = DbmsSSH(host=sys.argv[1], username='ops',key_filename='/home/ops/.ssh/id_rsa.pub')
-    stdin, stdout, stderr = ssh.do_comand(sys.argv[2])
+if __name__ == "__main__":
+    ssh = DbmsSSH(
+        host=sys.argv[1], username="ops", key_filename="/home/ops/.ssh/id_rsa.pub"
+    )
+    stdin, stdout, stderr = ssh.do_command(sys.argv[2])
     print(stdout.read())
     print(stderr.read())
