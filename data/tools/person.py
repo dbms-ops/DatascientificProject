@@ -2,7 +2,10 @@
 # -*- coding: utf-8 -*-
 
 
-class Person:
+from classtools import AttrDisplay
+
+
+class Person(AttrDisplay):
     name = "lixun"
 
     def __init__(self, name, job=None, pay=0) -> None:
@@ -16,16 +19,6 @@ class Person:
     def give_raise(self, percent):
         return self.pay * int(self.pay * (1 + percent))
 
-    def __str__(self) -> str:
-        """
-        重载 __str__ 运算符, 用于实例在进行打印时, 调用 __str__ 方法
-
-        Returns:
-            str: A string representation of the object.
-        """
-
-        return f"[Person: {self.name} {self.pay}]"
-
 
 class Manager(Person):
 
@@ -34,9 +27,6 @@ class Manager(Person):
 
     def give_raise(self, percent, bonus=0.10):
         super().give_raise(bonus + percent)
-
-    def __getattr__(self, attr):
-        return getattr(self.person, attr)
 
 
 class Department:
@@ -57,8 +47,8 @@ class Department:
 
 # 实现一个作为控制层的 manager
 class Manager1:
-    """通过 manager 实现一个控制类,
-    """
+    """通过 manager 实现一个控制类,"""
+
     def __init__(self, name, pay) -> None:
 
         self.person = Person(name, "mgr", pay)
@@ -73,6 +63,11 @@ class Manager1:
     def __str__(self):
 
         return str(self.person)
+
+
+class ShardData:
+    # 将非函数的对象赋值给类属性,就会产生数据属性,由所有实例共享
+    name = "supei"
 
 
 if __name__ == "__main__":
@@ -101,3 +96,9 @@ if __name__ == "__main__":
     tom.give_raise(0.10)
     print(tom.last_name())
     print(tom)
+
+    tom_1 = ShardData()
+    tom_2 = ShardData()
+
+    print(tom_1.name)
+    print(tom_2.name)
