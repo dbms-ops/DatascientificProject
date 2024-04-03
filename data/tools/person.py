@@ -70,6 +70,16 @@ class ShardData:
     name = "supei"
 
 
+class MixedNames:
+    data = "spam"
+
+    def __init__(self, value) -> None:
+        self.data = value
+
+    def display(self):
+        print(self.data, MixedNames.data)
+
+
 if __name__ == "__main__":
     # self-test code
     bob = Person("Bob Smith")
@@ -99,6 +109,10 @@ if __name__ == "__main__":
 
     tom_1 = ShardData()
     tom_2 = ShardData()
+
+    print(tom_1.name)
+    print(tom_2.name)
+    ShardData.name = "lixun"
 
     print(tom_1.name)
     print(tom_2.name)
