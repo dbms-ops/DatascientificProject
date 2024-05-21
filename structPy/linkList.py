@@ -67,6 +67,7 @@ class SingleLinkList(object):
         while cur:
             print(cur.item, end=" ")
             cur = cur.next
+        print()
 
     def add(self, item):
         node = Node(item)
@@ -101,10 +102,24 @@ class SingleLinkList(object):
             cur.next = node
 
     def insert(self, pos, item):
-        pass
+        node = Node(item)
+        if pos == 0:
+            self.add(item)
+        elif pos == self.length():
+            self.append(item)
+        else:
+            cur = self.__head
+            count = 0
+            while cur.next:
+                count += 1
+                if count == pos:
+                    node.next = cur.next
+                    cur.next = node
+                    break
+                cur = cur.next
 
     def remove(self, item):
-        pass
+        node = Node(item)
 
     def search(self, item):
         cur = self.__head
@@ -114,8 +129,8 @@ if __name__ == "__main__":
     ll = SingleLinkList()
     print(ll.is_empty())
     ll.append(1)
-    ll.travel()
     print(ll.is_empty(), ll.length())
     for x in range(10):
         ll.append(x)
+    ll.insert(6, 21)
     ll.travel()
